@@ -21,6 +21,6 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^3.0.6",
 		"papaparse": "^5.4.1",
-		"plotly": "^1.0.6"
+		"plotly.js-dist-min": "^2.35.2"
 	}
 }

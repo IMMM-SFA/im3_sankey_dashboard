@@ -1,0 +1,40 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./sankey_dashboard
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        env:
+          NODE_ENV: production
+        run: npm run build
+      - name: Commit the build dir
+        run: |
+          cd build
+          git init
+          git add -A
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m 'deploy' -a || true
+      - name: Push changes to gh-pages
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          directory: build
+          force: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+

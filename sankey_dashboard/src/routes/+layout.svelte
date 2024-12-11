@@ -1,20 +1,27 @@
 
 
 <script>
-const nav_items = ["home", "about"] ;
-
+    // this variable will be important if deploying to a non-root url,
+    // such as with github pages when you don't have a custom domain;
+    // defined in `svelte.config.js`
+	import { base } from '$app/paths';
+    const nav_items = ["home", "about"] ;
 </script>
 
-<style>
+<div id="navbar"> 
 
-</style>
-
-<div> 
-
-{#each nav_items as item}
-<a href="/{item}"> {item}</a>
-{/each}
+    {#each nav_items as item}
+        <a href="{base}/{item === "home" ? '' : item}">{item}</a>
+    {/each}
 
 </div>
 
-<slot></slot>
+<slot/>
+
+<style>
+    #navbar {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+    }
+</style>
